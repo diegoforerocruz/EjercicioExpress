@@ -1,5 +1,5 @@
 const express = require("express")
-
+const Joi = require("joi")
 const app = express()
 
 app.use(express.json())
@@ -21,8 +21,15 @@ app.get("/api/clients/:id", (req,res) => {
 })
 
 app.post("/api/clients", (req,res) => {
-    if(!req.body.name || req.body.name.length < 3){
-        return res.status(400).send("The given name is not valid")
+    const schema = Joi.object({
+        name: Joi.string()
+        .min(3)
+        .required()
+    })
+
+    const {error} = schema.validate(req.body)
+    if(error) {
+        return res.status(400).send(error)
     }
 
     const client = {
@@ -33,6 +40,39 @@ app.post("/api/clients", (req,res) => {
     clients.push(client)
     res.send(client)
 })
+
+app.put("/api/clients/:id", (req,res) => {
+    const client = clients.find( c => c.id === parseInt(req.params.id))
+    if(!client) return res.status(404).send("The client with this id was not found")
+
+    const schema = Joi.object({
+        name: Joi.string()
+        .min(3)
+        .required()
+    })
+
+    const {error} = schema.validate(req.body)
+    if(error) {
+        return res.status(400).send(error)
+    }
+
+    client.name = req.body.name
+
+    res.send(client)
+})
+
+app.delete("/api/clients/:id", (req,res) => {
+    const client = clients.find( c => c.id === parseInt(req.params.id))
+    if(!client) return res.status(404).send("The client with this id was not found")  
+
+    const index = clients.indexOf(client)
+
+    clients.splice(index, 1)
+
+    res.send(client)
+})
+
+
 
 app.listen(3000, () => {
     console.log("Listening on port 3000")
