@@ -1,0 +1,24 @@
+{
+  "name": "Ejercicio-Express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scripts.js",
+  "scripts": {
+    "start": "nodemon scripts.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diegoforerocruz/EjercicioExpress.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diegoforerocruz/EjercicioExpress/issues"
+  },
+  "homepage": "https://github.com/diegoforerocruz/EjercicioExpress#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
